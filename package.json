@@ -1,0 +1,19 @@
+{
+  "name": "dmt.scw.sap.server",
+  "version": "1.0.0",
+  "description": "DMT.SAP.SCW.Server project",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/chumpon-asaneerat/DMT.SCW.SAP.Server.git"
+  },
+  "author": "Chumpon Asaneerat",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/chumpon-asaneerat/DMT.SCW.SAP.Server/issues"
+  },
+  "homepage": "https://github.com/chumpon-asaneerat/DMT.SCW.SAP.Server#readme"
+}
