@@ -11,9 +11,9 @@ const logger = require(path.join(rootPath, 'lib', 'logger')).logger
 //#endregion
 
 const execute = (req, res, next) => {
-    logger.info('call route' + req.route)
+    //res.send('Hello from SSL server')
     let obj = {
-        value: 'not implements.',
+        value: 'not implements.'
     }
     res.json(obj)
 

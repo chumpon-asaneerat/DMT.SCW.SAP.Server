@@ -11,7 +11,6 @@ const logger = require(path.join(rootPath, 'lib', 'logger')).logger
 //#endregion
 
 const execute = (req, res, next) => {
-    logger.info('call route' + req.route)
     res.sendFile(path.join( __dirname, 'index.html'));
     if (!next) next()
 }
