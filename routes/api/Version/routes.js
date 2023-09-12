@@ -11,6 +11,7 @@ const logger = require(path.join(rootPath, 'lib', 'logger')).logger
 //#endregion
 
 const execute = (req, res, next) => {
+    logger.info('call route' + req.route)
     let obj = {
         name: 'TA-SAP-SCW Web Server',
         version: '1.0.0',
@@ -21,7 +22,7 @@ const execute = (req, res, next) => {
 }
 
 const init_routes = (app) => {
-    app.all('/version', execute);
+    app.all('/api/public/version', execute);
 };
 
 module.exports.init_routes = exports.init_routes = init_routes;
