@@ -1,0 +1,8 @@
+{
+    "auditFile": "logger-audit.json",
+    "filename": "logs/application-%DATE%.log",
+    "datePattern": "YYYY-MM-DD-HH",
+    "zippedArchive": false,
+    "maxSize": "20m",
+    "maxFiles": "14d"
+}
