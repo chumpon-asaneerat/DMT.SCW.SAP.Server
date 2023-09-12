@@ -1,3 +1,5 @@
+//#region common requires
+
 const path = require('path')
 const fs = require('fs')
 
@@ -11,6 +13,8 @@ const https = require('https')
 
 const middlewares = require(path.join(rootPath, 'lib', 'middlewares'))
 const routeManager = require(path.join(rootPath, 'lib', 'route-manager'))
+
+//#endregion
 
 // write app version to log
 logger.info('start TA-SAP-SCW Server v1.0.0 build 383 update 2023-09-20 06:00');

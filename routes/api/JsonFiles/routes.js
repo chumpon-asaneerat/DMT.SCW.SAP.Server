@@ -20,7 +20,7 @@ const execute = (req, res, next) => {
 }
 
 const init_routes = (app) => {
-    app.get('/', execute);
+    app.get('/api/json', execute);
 };
 
 module.exports.init_routes = exports.init_routes = init_routes;
