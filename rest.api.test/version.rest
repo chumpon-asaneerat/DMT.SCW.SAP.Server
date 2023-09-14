@@ -1,6 +1,24 @@
-### Save TOD User Shift Start
+### Get Version
 POST https://localhost:3443/api/public/version
 content-type: application/json
 
 {
+}
+
+### Get json save request to file no auth
+
+POST https://localhost:3443/api/secure/json
+content-type: application/json
+Authorization: Basic a b
+
+{    
+}
+
+### Get json save request to file with auth
+
+POST https://localhost:3443/api/secure/json
+content-type: application/json
+Authorization: Basic api_user DMTinf#2023
+
+{    
 }

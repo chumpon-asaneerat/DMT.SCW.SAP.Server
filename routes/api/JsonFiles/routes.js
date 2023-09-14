@@ -21,7 +21,7 @@ const execute = (req, res, next) => {
 }
 
 const init_routes = (app) => {
-    app.get('/api/secure/json', execute);
+    app.post('/api/secure/json', execute);
 };
 
 module.exports.init_routes = exports.init_routes = init_routes;
