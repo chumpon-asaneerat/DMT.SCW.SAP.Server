@@ -1,0 +1,19 @@
+{
+    "app": {
+        "name": "TA-SAP-SCW Server",
+        "version": "1.0.0",
+        "build": 383,
+        "port": 3443
+    },
+    "sqlServer": {
+        "server": "localhost",
+        "database": "TAxTOD",
+        "user": "sa",
+        "password": "winnt123",
+        "pool": {
+            "max": 10,
+            "min": 0,
+            "timeout": 1000
+        }
+    }
+}

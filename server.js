@@ -14,21 +14,20 @@ const https = require('https')
 const middlewares = require(path.join(rootPath, 'lib', 'middlewares'))
 const routeManager = require(path.join(rootPath, 'lib', 'route-manager'))
 
+const config = require(path.join(rootPath, 'lib', 'configs')).config
+
 //#endregion
 
 // write app version to log
-logger.info('start TA-SAP-SCW Server v1.0.0 build 383 update 2023-09-20 06:00');
+let appname = `${config.app.name} v${config.app.version} build ${config.app.build}`
+let port = config.app.port
+
+logger.info(`start ${appname} listen on port: ${port}`);
 
 // Create express app.
 const app = express()
 middlewares.init_middlewares(app)
 routeManager.init_routes(app)
-
-/*
-app.use('/', (req, res, next) => { 
-    res.send('Hello from SSL server')
-})
-*/
 
 // create http server
 const sslServer = https.createServer({
@@ -36,8 +35,6 @@ const sslServer = https.createServer({
         cert: fs.readFileSync(path.join(rootPath, 'cert', 'cert.pem'))
     }, app)
 
-let appname = 'TA-SAP-SCW Server v1.0.0 build 383'    
-let port = 3443
 
 sslServer.listen(port, () => { 
     let msg = `${appname} listen on port: ${port}`
