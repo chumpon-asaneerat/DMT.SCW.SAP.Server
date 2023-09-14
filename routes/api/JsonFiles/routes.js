@@ -15,17 +15,16 @@ const moment = require('moment')
 
 const saveJsonFile = (req, res, next) => {
     let fname = 'req.' + moment().format('YYYY.MM.DD.HH.mm.ss.SSSS') + '.json'
-    let filename = path.join(rootPath, 'jsonfiles', fname)
+    let filename = path.join(rootPath, 'jsonfiles', 'req', fname)
     let value = req.body
     jsonfile.save(filename, value)
 
     let obj = {
-        value: 'not implements.',
-        headers: req.headers
+        value: 'file ' + fname + ' saved.'
     }
     res.json(obj)
 
-    if (!next) next() // remove or comment out after write handler code.
+    //if (!next) next() // remove or comment out after write handler code.
 }
 
 const init_routes = (app) => {
