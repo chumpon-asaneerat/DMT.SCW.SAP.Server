@@ -48,14 +48,13 @@ const saveOBToll = (req, res, next) => {
             // increase counter
             iCnt++
         }
-        // send response back
-        res.json(output)
     }
     else {
         //logger.info('Header is null or empty array.')
         console.log('Header is null or empty array.')
-        if (!next) next() // remove or comment out after write handler code.
     }
+    // send response back
+    res.json(output)
 }
 
 const init_routes = (app) => {
