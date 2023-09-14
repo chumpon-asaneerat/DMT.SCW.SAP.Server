@@ -9,7 +9,10 @@ const rootPath = process.env['ROOT_PATHS'];
 const logger = require(path.join(rootPath, 'lib', 'logger')).logger
 
 const jsonfile = require(path.join(rootPath, 'lib', 'jsonfile'))
-const moment = require('moment')
+const moment = require('moment');
+const sqlserver = require('../../../lib/sqlserver');
+
+const SqlServer = require(path.join(rootPath, 'lib', 'SqlServer'))
 
 //#endregion
 
@@ -26,6 +29,7 @@ const saveOBToll = (req, res, next) => {
     if (headers && headers.length > 0) {
         console.log('Header record count: ' + headers.length)
         let iCnt = 0
+
         for (header of headers) {
             let matSlip =  header.MAT_SLIP
 
