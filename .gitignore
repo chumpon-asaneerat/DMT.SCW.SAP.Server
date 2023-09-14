@@ -63,8 +63,10 @@ typings/
 # next.js build output
 .next
 
-# app.config.json
+# all config
 app.config.json
+logger.config.json
+routes_http_error_inject.config.json
 
 # jsonfiles
 jsonfiles
