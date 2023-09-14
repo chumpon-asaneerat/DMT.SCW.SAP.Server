@@ -3,7 +3,8 @@
         "name": "TA-SAP-SCW Server",
         "version": "1.0.0",
         "build": 383,
-        "port": 3443
+        "port": 3443,
+        "update": "2023-09-20T06:00:35.000+07:00"
     },
     "sqlServer": {
         "server": "localhost",

@@ -7,15 +7,16 @@ const rootPath = process.env['ROOT_PATHS'];
 
 // init logger
 const logger = require(path.join(rootPath, 'lib', 'logger')).logger
+const config = require(path.join(rootPath, 'lib', 'configs')).config
 
 //#endregion
 
 const execute = (req, res, next) => {
     let obj = {
-        name: 'TA-SAP-SCW Web Server',
-        version: '1.0.0',
-        build: 383,
-        update: new Date('2023-09-20T06:00:35.000+07:00')
+        name: config.app.name,
+        version: config.app.version,
+        build: config.app.build,
+        update: config.app.update
     }
     res.json(obj)
 }
