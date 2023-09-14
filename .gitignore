@@ -63,5 +63,8 @@ typings/
 # next.js build output
 .next
 
-# nlib.config.json
-#nlib.config.json
+# app.config.json
+app.config.json
+
+# jsonfiles
+jsonfiles

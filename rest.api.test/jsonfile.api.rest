@@ -1,9 +1,7 @@
-### Get Version
-POST https://localhost:3443/api/public/version
-content-type: application/json
+### common variables
+@username=api_user
+@password=DMTinf#2023
 
-{
-}
 
 ### Get json save request to file no auth
 
@@ -18,7 +16,8 @@ Authorization: Basic a b
 
 POST https://localhost:3443/api/secure/json
 content-type: application/json
-Authorization: Basic api_user DMTinf#2023
+Authorization: Basic {{username}} {{password}}
+SAP-Client: 300
 
 {    
 }
