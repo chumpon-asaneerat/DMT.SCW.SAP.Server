@@ -63,7 +63,7 @@ typings/
 # next.js build output
 .next
 
-# all config
+# do not sync all auto generate config
 app.config.json
 logger.config.json
 routes_http_error_inject.config.json
