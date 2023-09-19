@@ -10,9 +10,7 @@ const logger = require(path.join(rootPath, 'lib', 'logger')).logger
 
 const jsonfile = require(path.join(rootPath, 'lib', 'jsonfile'))
 const moment = require('moment');
-const sqlserver = require('../../../lib/sqlserver');
-
-const sqldb = require(path.join(rootPath, 'lib', 'SqlServer'))
+const sqldb = require(path.join(rootPath, 'TAxTOD.db'))
 
 //#endregion
 
