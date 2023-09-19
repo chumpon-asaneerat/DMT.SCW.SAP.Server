@@ -13,6 +13,21 @@ const sqldb = require(path.join(rootPath, 'TAxTOD.db'))
 
 //#endregion
 
+
+const executeSP = async (pObj) => {
+    let ret = {}
+    let db = new sqldb()
+    let connected = await db.connect()
+    if (connected) {
+        ret = await db.TestSP(params) 
+        if (ret) {
+            console.log(ret)
+        }
+        await db.disconnect()
+    }
+    return ret
+}
+
 const testSP = (req, res, next) => {
     /*
     if (headers && headers.length > 0) {
@@ -48,28 +63,8 @@ const testSP = (req, res, next) => {
     }
     */
     
-    let db = new sqldb()
-    let fn = async () => 
-    { 
-        let connected = await db.connect();
-        if (connected)
-        {
-            let params = {
-                p1: 1,
-                p2: new moment()
-            }
-            ret = await db.TestSP(params) 
-            if (ret) {
-                console.log(ret)
-            }
-            await db.disconnect();
-        }
-        else {
-            ret = null
-        }
-    }
 
-    fn().then(data => {
+    executeSP().then(data => {
         let output = data
         // send response back
         res.json(output)
