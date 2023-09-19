@@ -11,7 +11,7 @@ const SqlServer = require(path.join(rootPath, 'lib', 'SqlServer'))
 //#endregion
 
 const TAxTOD = class extends SqlServer {
-    //#region TestSP
+    //#region SaveCouponReservation
 
     async SaveCouponReservation(pObj) {
         let name = 'SaveCouponReservation'        
@@ -26,7 +26,7 @@ const TAxTOD = class extends SqlServer {
             { "name": "plant", "type": "char(4)" },
             { "name": "location", "type": "char(4)" },
             { "name": "goodsrecipient", "type": "char(12)" },
-            { "name": "matdescription", "type": "char(40)" }
+            { "name": "matdescription", "type": "nchar(40)" }
         ]
         let outputs = [
             { "name": "errNum", "type": "int" },

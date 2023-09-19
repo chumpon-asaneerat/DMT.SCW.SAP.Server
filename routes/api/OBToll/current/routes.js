@@ -19,7 +19,6 @@ const Process = async (params) => {
     let output = await SaveCouponReservations(spParams)
     return output
 }
-
 const CouponReservationParams = async (headers) => {
     let iSlipCnt = 0
     let iItemCnt = 0
@@ -58,12 +57,6 @@ const CouponReservationParams = async (headers) => {
 
     return results
 }
-
-async function* getParams(spParams) {
-    yield 1;
-    yield 2;
-}
-
 const SaveCouponReservations = async (spParams) => {
     const output = {
         Return: []
@@ -93,7 +86,6 @@ const SaveCouponReservations = async (spParams) => {
     }
     return output
 }
-
 const SaveCouponReservation = async (pObj) => {
     let ret = {}
     let db = new sqldb()
@@ -120,7 +112,6 @@ const SaveReceivedCoupon = async (pObj) => {
     }
     return ret
 }
-
 const saveOBToll = (req, res, next) => {
     let params = webUtils.parseReq(req).data
     
