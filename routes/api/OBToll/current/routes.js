@@ -7,14 +7,16 @@ const rootPath = process.env['ROOT_PATHS'];
 
 // init logger
 const logger = require(path.join(rootPath, 'lib', 'logger')).logger
-
 const moment = require('moment');
 const sqldb = require(path.join(rootPath, 'TAxTOD.db'))
 
 //#endregion
 
-const testSP = (req, res, next) => {
-    /*
+const saveOBToll = (req, res, next) => {
+    let headers = value.Header
+    let output = {
+        Return: []
+    }
     if (headers && headers.length > 0) {
         console.log('Header record count: ' + headers.length)
         let iCnt = 0
@@ -46,39 +48,12 @@ const testSP = (req, res, next) => {
         //logger.info('Header is null or empty array.')
         console.log('Header is null or empty array.')
     }
-    */
-    
-    let db = new sqldb()
-    let fn = async () => 
-    { 
-        let connected = await db.connect();
-        if (connected)
-        {
-            let params = {
-                p1: 1,
-                p2: new moment()
-            }
-            ret = await db.TestSP(params) 
-            if (ret) {
-                console.log(ret)
-            }
-            await db.disconnect();
-        }
-        else {
-            ret = null
-        }
-    }
-
-    fn().then(data => {
-        let output = data
-        // send response back
-        res.json(output)
-    })
-
+    // send response back
+    res.json(output)
 }
 
 const init_routes = (app) => {
-    app.post('/api/secure/test_sp/gets', testSP);
+    app.post('/api/secure/ob_toll/save', saveOBToll);
 };
 
 module.exports.init_routes = exports.init_routes = init_routes;

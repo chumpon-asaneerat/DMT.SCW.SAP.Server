@@ -7,12 +7,8 @@ const rootPath = process.env['ROOT_PATHS'];
 
 // init logger
 const logger = require(path.join(rootPath, 'lib', 'logger')).logger
-
 const jsonfile = require(path.join(rootPath, 'lib', 'jsonfile'))
 const moment = require('moment');
-const sqlserver = require('../../../lib/sqlserver');
-
-const SqlServer = require(path.join(rootPath, 'lib', 'SqlServer'))
 
 //#endregion
 
@@ -62,7 +58,7 @@ const saveOBToll = (req, res, next) => {
 }
 
 const init_routes = (app) => {
-    app.post('/api/secure/ob_toll/save', saveOBToll);
+    app.post('/api/secure/ob_toll/v0/save', saveOBToll);
 };
 
 module.exports.init_routes = exports.init_routes = init_routes;
