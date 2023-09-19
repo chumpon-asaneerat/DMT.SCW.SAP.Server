@@ -20,7 +20,7 @@ const config = require(path.join(rootPath, 'lib', 'configs')).config
 
 // write app version to log
 let appname = `${config.app.name} v${config.app.version} build ${config.app.build}`
-let port = config.app.port
+let port = config.webServer.port
 
 logger.info(`start ${appname} listen on port: ${port}`);
 
