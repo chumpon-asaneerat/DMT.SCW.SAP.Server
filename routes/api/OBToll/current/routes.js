@@ -15,107 +15,85 @@ const sqldb = require(path.join(rootPath, 'TAxTOD.db'))
 
 const Process = async (params) => {
     let headers = params.Header
-    let output = await ProcessHeaders(headers)
+    let spParams = await CouponReservationParams(headers)
+    let output = await SaveCouponReservations(spParams)
     return output
 }
 
-const createOutput = () => {
-    let output = {
-        Return: [],
-        errors: {
-            hasError: false,
-            errNum: 0,
-            errMsg: ''
-        }
-    }
-    return output
-}
-
-const CreateResult = (dbRet, header) => {
-    let type = (dbRet.out.errNum == 0) ? 'S' : 'E'
-    let msg = (dbRet.out.errNum == 0) ? 'Successfull' : dbRet.out.errMsg
-    let ret = {
-        MAT_SLIP: header.MAT_SLIP,
-        TYPE: type,
-        MESSAGE: msg
-    }
-    return ret
-}
-
-const CreateCouponReservationParam = (header) => {
-    let pObj = {
-        postingdate: header.POSTING_DATE,
-        mat_slip: header.MAT_SLIP,
-        headertext: header.HEADER_TXT,
-        itemnumber: null,
-        materialnum: null,
-        quantity: null,
-        unit: null,
-        plant: null,
-        location: null,
-        goodsrecipient: null,
-        matdescription: null
-    }
-
-    return pObj
-}
-
-const ProcessHeaders = async (headers) => {
-    let output = createOutput()
-    
-    let iCnt = 0
+const CouponReservationParams = async (headers) => {
+    let iSlipCnt = 0
+    let iItemCnt = 0
+    let results = []
     if (headers) {
         for (let header of headers) {
-            let success = await ProcessHeader(header, output)
-            if (success) iCnt++
+            if (header) {
+                let items = header.Item
+                for (let item of items) {
+                    if (item) {
+                        let pObj = {
+                            postingdate: header.POSTING_DATE,
+                            mat_slip: header.MAT_SLIP,
+                            headertext: header.HEADER_TXT,
+                            itemnumber: item.ITEM_NUMBER,
+                            materialnum: item.MATERIAL_NUM,
+                            quantity: item.QUANTITY,
+                            unit: item.UNIT_OF_MEASURE,
+                            plant: item.PLANT,
+                            location: item.STORAGE_LOCATION,
+                            goodsrecipient: item.GOODS_RECIPIENT,
+                            matdescription: item.MATERIAL_DESCRIPTION,
+                            books: []
+                        }
+                        results.push(pObj)
+                        // increase item count
+                        iItemCnt++
+                    }
+                }
+                // increase slip count
+                iSlipCnt++
+            }
         }
     }
-    console.log(`Total Process MAT_SLIPS: ${iCnt}`)
+    console.log(`Total Process MAT_SLIPS: ${iSlipCnt}, TOTAL ITEMS: ${iItemCnt}`)
 
-    return output;
+    return results
 }
-const ProcessHeader = async (header, output) => {
-    let ret = false
-    if (header) {
-        let matSlip =  header.MAT_SLIP
-        let items = header.Item    
-        let itemCnt = 0
-        let successCnt = 0
-        if (items) {
-            itemCnt = items.length
-            successCnt = await ProcessItems(header, items, output)
-        }
-        let sp_param = CreateCouponReservationParam(header)
-        let dbRet = await SaveCouponReservation(sp_param)
-        console.log(dbRet)
-        // create item result
-        let ret = CreateResult(dbRet, header)
-        // append to array
-        output.Return.push(ret)
 
-        console.log(`Process MAT_SLIP = ${matSlip}, Total items: ${itemCnt}, Success: ${successCnt}`)
-        ret = true
-    }
-    return ret
+async function* getParams(spParams) {
+    yield 1;
+    yield 2;
 }
-const ProcessItems = async (header, items, output) => {
-    let iCnt = 0
-    if (items) {
-        for (let item of items) {
-            let success = await ProcessItem(header, item, output)
-            if (success) iCnt++
+
+const SaveCouponReservations = async (spParams) => {
+    const output = {
+        Return: []
+    }
+    for await (const spParam of spParams) {
+        // save to db
+        const dbResult = await SaveCouponReservation(spParam)
+        let slipId = spParam.mat_slip
+        let map = output.Return.map(slip => slip['MAT_SLIP'])
+        let idx = map.indexOf(slipId)
+
+        let type = (dbResult.out.errNum == 0) ? 'S' : 'E'
+        let msg = (dbResult.out.errNum == 0) ? 'Successfull' : dbResult.out.errMsg
+        let ret;
+
+        if (idx === -1) {
+            ret = {
+                MAT_SLIP: slipId,
+                TYPE: type,
+                MESSAGE: msg
+            }
+            output.Return.push(ret)
+        }
+        else {
+            ret = output.Return[idx]
         }
     }
-    console.log(`Total Process MAT_SLIPS: ${iCnt}`)
-    return iCnt;
+    return output
 }
-const ProcessItem = async (header, item, output) => {
-    let ret = false
-    if (item) {
-        ret = true
-    }
-    return ret
-}
+
 const SaveCouponReservation = async (pObj) => {
     let ret = {}
     let db = new sqldb()
@@ -149,53 +127,6 @@ const saveOBToll = (req, res, next) => {
     Process(params).then(output => {
         res.json(output)
     })
-    /*
-    let headers = value.Header
-    let output = {
-        Return: []
-    }
-    if (headers && headers.length > 0) {
-        console.log('Header record count: ' + headers.length)
-        let iCnt = 0
-
-        for (header of headers) {
-            let matSlip =  header.MAT_SLIP
-
-            let items = header.Item
-            if (items && items.length > 0) {
-                let sInfo = `MAT_SLIP: ${matSlip} total items: ${items.length}`
-                console.log(sInfo)
-            }
-
-            let bErr = ((iCnt % 2) == 0)
-            let type = (bErr) ? "E" : "S"
-            let msg = (bErr) ? "No material found" : "Successfull"
-            let ret = {
-                MAT_SLIP: matSlip,
-                TYPE: type,
-                MESSAGE: msg
-            }
-            // append to array
-            output.Return.push(ret)
-            // increase counter
-            iCnt++
-        }
-    }
-    else {
-        //logger.info('Header is null or empty array.')
-        console.log('Header is null or empty array.')
-    }
-    // send response back
-    res.json(output)
-
-    let params = webUtils.parseReq(req).data;
-
-    executeSP(params).then(data => {
-        let output = data
-        // send response back
-        res.json(output)
-    })
-    */
 }
 
 const init_routes = (app) => {
