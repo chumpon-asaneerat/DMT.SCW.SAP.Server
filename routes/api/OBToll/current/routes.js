@@ -46,6 +46,22 @@ const CouponReservationParams = async (headers) => {
                         results.push(pObj)
                         // increase item count
                         iItemCnt++
+
+                        let serials = item.ZSERIAL_NO
+                        if (serials) {
+                            for (let serial of serials) {
+                                if (serial) {
+                                    let book = {
+                                        materialnum: item.MATERIAL_NUM,
+                                        location: item.STORAGE_LOCATION,
+                                        SerialNo: serial.SERIAL_NO,
+                                        mat_slip: header.MAT_SLIP,
+                                        matdescription: MATERIAL_DESCRIPTION
+                                    }
+                                    pObj.books.push[book]
+                                }
+                            }
+                        }
                     }
                 }
                 // increase slip count
