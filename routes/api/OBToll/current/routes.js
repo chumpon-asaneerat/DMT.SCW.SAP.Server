@@ -43,10 +43,7 @@ const CouponReservationParams = async (headers) => {
                             matdescription: item.MATERIAL_DESCRIPTION,
                             books: []
                         }
-                        results.push(pObj)
-                        // increase item count
-                        iItemCnt++
-
+                        // load serial numbers
                         let serials = item.ZSERIAL_NO
                         if (serials) {
                             for (let serial of serials) {
@@ -56,12 +53,15 @@ const CouponReservationParams = async (headers) => {
                                         location: item.STORAGE_LOCATION,
                                         SerialNo: serial.SERIAL_NO,
                                         mat_slip: header.MAT_SLIP,
-                                        matdescription: MATERIAL_DESCRIPTION
+                                        matdescription: item.MATERIAL_DESCRIPTION
                                     }
-                                    pObj.books.push[book]
+                                    pObj.books.push(book)
                                 }
                             }
                         }
+                        results.push(pObj)
+                        // increase item count
+                        iItemCnt++
                     }
                 }
                 // increase slip count
@@ -80,6 +80,17 @@ const SaveCouponReservations = async (spParams) => {
     for await (const spParam of spParams) {
         // save to db
         const dbResult = await SaveCouponReservation(spParam)
+
+        if (spParam && spParam.books) {
+            // save coupon serials
+            for await (const book of spParam.books) {
+                const dbResult2 = await SaveReceivedCoupon(book)
+                if (dbResult2) {
+
+                }
+            }
+        }
+
         let slipId = spParam.mat_slip
         let map = output.Return.map(slip => slip['MAT_SLIP'])
         let idx = map.indexOf(slipId)
