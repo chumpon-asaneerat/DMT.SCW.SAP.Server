@@ -55,6 +55,7 @@ webServer.listen(port, () => {
     logger.info(msg);
 })
 
+/*
 // http request client (fetch)
 const fetch = require('node-fetch')
 
@@ -87,9 +88,7 @@ let body = {
 }
 
 request()
-
-
-const schedule = require('node-schedule')
+*/
 
 // The cron format consists of:
 //
@@ -103,7 +102,7 @@ const schedule = require('node-schedule')
 // │    └──────────────────── minute (0 - 59)
 // └───────────────────────── second (0 - 59, OPTIONAL)
 
-
+// const schedule = require('node-schedule')
 // const job = schedule.scheduleJob('*/5 * * * * *', () => {
 //     // run every 5 s.
 //     console.log('The answer to life, the universe, and everything!')
@@ -111,6 +110,8 @@ const schedule = require('node-schedule')
 
 
 // Use Recurrence Rule - every 2 second
+/*
+// const schedule = require('node-schedule')
 const rule = new schedule.RecurrenceRule()
 let times = []
 for (let i = 1; i < 60; i++) { 
@@ -126,3 +127,5 @@ const job = schedule.scheduleJob(rule, () => {
 process.on('SIGINT', () => { 
     schedule.gracefulShutdown().then(() => process.exit(0))
 })
+*/
+
