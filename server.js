@@ -55,6 +55,39 @@ webServer.listen(port, () => {
     logger.info(msg);
 })
 
+// http request client (fetch)
+const fetch = require('node-fetch')
+
+let url = 'https://api.restful-api.dev/objects'
+let body = {
+    "name": "Apple MacBook Pro 16",
+    "data": {
+       "year": 2019,
+       "price": 1849.99,
+       "CPU model": "Intel Core i9",
+       "Hard disk size": "1 TB"
+    }
+ }
+
+ let request = async () => {
+    try {
+        const response = await fetch(url, { 
+            method: 'POST',
+            body: JSON.stringify(body),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+        const data = await response.json()
+        console.log(data)
+    }
+    catch (err) {
+        console.log(err)
+    }
+}
+
+request()
+
 
 const schedule = require('node-schedule')
 
