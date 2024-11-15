@@ -16,6 +16,9 @@
     "url": "https://github.com/chumpon-asaneerat/DMT.SCW.SAP.Server/issues"
   },
   "homepage": "https://github.com/chumpon-asaneerat/DMT.SCW.SAP.Server#readme",
+  "volta": {
+    "node": "12.14.0"
+  },
   "devDependencies": {
     "@types/gulp": "^4.0.9"
   },
